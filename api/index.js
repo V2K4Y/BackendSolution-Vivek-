@@ -21,6 +21,7 @@ app.use(cors({
 const PORT = process.env.PORT || 4001;
 console.log("getting to the routes")
 app.use('/', require('./routes/request'));
+app.use('/service', require('./routes/service'));
 app.use('/user', require('./routes/user'));
 
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));

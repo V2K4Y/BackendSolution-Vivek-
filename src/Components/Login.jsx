@@ -1,8 +1,9 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { ContextProvider } from "./UserContext";
 import axios from "axios";
 
-export default function Login() {
+export default React.memo(function Login() {
+    // console.log('Login render')
     const [reg, setReg] = useState('login');
     const {setUsername, setAdmin} = useContext(ContextProvider)
     const [msg, setMsg] = useState('');
@@ -16,15 +17,24 @@ export default function Login() {
         .then(res => {
             setUsername(res.data.username);
             setAdmin(res.data.admin);
-            if(res.data.msg == 'User already exist!' || res.data.msg == 'Invalid Username or Password!') setMsg(res.data.msg);
+            if(res.data.msg != "Success") setMsg(res.data.msg);
+            else {
+                reg == 'register' ? setMsg('User Registered !') : setMsg('Logged In');
+            }
+            setTimeout(()=>{
+                setMsg('');
+            }, 3000)
             document.getElementById('user').value = '';
             document.getElementById('pass').value = '';
+            localStorage.setItem("isAdmin", res.data.admin)
+            localStorage.setItem("username", res.data.username)
+
         })
         .catch(err => console.log("Error: ", err))
     }
 
     return (
-        <div className="flex justify-center items-center bg-[url('../assets/todo.jpg')] h-screen">
+        <div className="flex justify-center items-center bg-[url('./assets/todo.jpg')] h-screen">
                 <div className="md:w-1/3 sm:w-1/2 rounded-xl font-sans">
                 <div
                     className="flex flex-col justify-center items-center gap-3 p-5 rounded-xl bg-black/30 backdrop-blur-sm">
@@ -46,4 +56,4 @@ export default function Login() {
                 </div>
         </div>
     )
-}
+})

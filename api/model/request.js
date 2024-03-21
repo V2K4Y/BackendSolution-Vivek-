@@ -23,6 +23,11 @@ const requestSchema = new mongoose.Schema({
     },
     resolutionDate: {
         type: Date,
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'requestusers',
+        require: true,
     }
 });
 

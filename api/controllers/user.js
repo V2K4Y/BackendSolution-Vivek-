@@ -19,7 +19,7 @@ const regUser = async (req, res) => {
         sameSite: 'none',
         maxAge: 60 * 60 * 1000,
     })
-    res.status(200).json({msg: "User registered !", username: user.username, id: user._id});
+    res.status(200).json({msg: "Success", username: user.username, id: user._id});
 }
 
 const loginUser = async (req, res) => {
@@ -32,7 +32,7 @@ const loginUser = async (req, res) => {
         res.cookie('rqid', token, {
             maxAge: 60 * 60 * 1000,
         });
-        return res.status(200).json({msg: "Logged In", username: user.username, id: user._id, admin: user.admin});
+        return res.status(200).json({msg: "Success", username: user.username, id: user._id, admin: user.admin});
     }
     res.status(200).json({msg: "Invalid Username or Password!"});
 }

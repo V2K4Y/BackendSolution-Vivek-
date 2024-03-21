@@ -11,13 +11,14 @@ const checkAuth = async (req, res, next) => {
             const user = await userModel.findById(id);
             if(req.query?.admin) return res.status(200).json({admin:user.admin});
             if(user) {
-                // console.log('Autherized')
+                console.log('Autherized')
+                req.id = id;
                 return next();
             }
             return res.status(404).json({msg: 'No records found !'});
 
         } else {
-            // console.log('Not autharized!')
+            console.log('Not autharized!')
             return res.status(403).json({msg: 'Not autharized !'});
         }
     } catch (error) {
